@@ -289,3 +289,52 @@ int main()
 
 //有bug
 ```
+
+### 8.10  函数system
+```C++
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main()
+{
+    int status;
+    if((status = system("date"))<0)
+        printf("syste() error\n");
+    // pr_exit(status);
+
+    if((status = system("nosuchcommand"))<0)
+        printf("syste() error\n");
+    // pr_exit(status);
+
+    if((status = system("who; exit 44"))<0)
+        printf("syste() error\n");
+    // pr_exit(status);
+    exit(0);
+}
+```
+### 8.11 进程调度
+```C++
+//获取和更改nice值
+int nice(int incr);
+//获取进程或一组相关进程nice值
+int getpriority(int which, id_t who);
+//为进程、进程组和属于特定用户ID的所有进程设置优先级。
+int setpriority(int which, id_t who, int value);
+```
+
+### 8.12 进程时间
+
+#### 三个时间量 1.墙上时钟时间 2.用户CPU时间 3.系统CPU时间
+```C++
+clock_t times(struct tms *buf);
+
+//tms结构
+struct tms {
+clock_t tms_utime; /* user CPU time */
+clock_t tms_stime; /* system CPU time */
+//子进程
+clock_t tms_cutime; /* user CPU time,terminated children */
+clock_t tms_cstime; /* system CPU time,terminated children */
+}
+```
